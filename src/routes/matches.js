@@ -9,7 +9,7 @@ const matchRouter = Router();
 
 const MAX_LIMIT = 100;
 
-
+// GET MATCHES - List matches with optional limit
 matchRouter.get('/', async (req, res) => {
     const parsed = listMatchesQuerySchema.safeParse(req.query);
     if (!parsed.success) {
@@ -26,6 +26,8 @@ matchRouter.get('/', async (req, res) => {
     }
 })
 
+
+// POST MATCH - Create a new match
 matchRouter.post('/', async (req, res) => {
     const parsed = createMatchSchema.safeParse(req.body);
     if (!parsed.success) {
@@ -43,6 +45,11 @@ matchRouter.post('/', async (req, res) => {
             awayScore: awayScore ?? 0,
             status: getMatchStatus(startTime, endTime) || 'scheduled',
         }).returning();
+
+        // boroadcast the newly created match to all connected WebSocket clients
+        if (res.app.locals.broadcastMatchCreated) {
+            res.app.locals.broadcastMatchCreated(event)
+        }
 
         return res.status(201).json({ data: event })
     } catch (error) {

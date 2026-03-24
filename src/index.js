@@ -1,20 +1,35 @@
 import express from 'express';
 import matchRouter from './routes/matches.js';
+import http from 'http';
+import { attachWebSocketServer } from './ws/server.js';
 import 'dotenv/config';
 
 if (!process.env.PORT) {
     throw new Error('PORT is not defined in .env file');
 }
-const PORT = process.env.PORT;
+
+if (!process.env.HOST) {
+    throw new Error('HOST is not defined in .env file');
+}
+
+const PORT = Number(process.env.PORT || 8000);
+const HOST = process.env.HOST || '0.0.0.0';
+
+
+// express app
 const app = express();
+const server = http.createServer(app)
 
 app.use(express.json());
 app.use("/api/matches", matchRouter);
 
-app.get('/', (req, res) => {
-    res.send('Welcome to the Sportz API!');
-});
+// attch websocket server to the existing HTTP server
+const { broadcastMatchCreated } = attachWebSocketServer(server)
+app.locals.broadcastMatchCreated = broadcastMatchCreated;
 
-app.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}`);
+
+server.listen(PORT, HOST, () => {
+    const baseUrl = HOST === '0.0.0.0' ? `http://localhost:${PORT}` : `http://${HOST}:${PORT}`;
+    console.log(`Server running at ${baseUrl}`);
+    console.log(`WebSocket Server is running ${baseUrl.replace('http', 'ws')}/ws`);
 });
