@@ -4,6 +4,7 @@ import http from 'http';
 import { attachWebSocketServer } from './ws/server.js';
 import 'dotenv/config';
 
+
 if (!process.env.PORT) {
     throw new Error('PORT is not defined in .env file');
 }
