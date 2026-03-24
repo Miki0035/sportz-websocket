@@ -2,6 +2,7 @@ import express from 'express';
 import matchRouter from './routes/matches.js';
 import http from 'http';
 import { attachWebSocketServer } from './ws/server.js';
+import { securityMiddleware } from './arcjet.js';
 import 'dotenv/config';
 
 
@@ -22,6 +23,7 @@ const app = express();
 const server = http.createServer(app)
 
 app.use(express.json());
+app.use(securityMiddleware());
 app.use("/api/matches", matchRouter);
 
 // attch websocket server to the existing HTTP server
