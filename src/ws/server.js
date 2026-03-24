@@ -1,4 +1,5 @@
 import { WebSocket, WebSocketServer } from "ws"
+import { wsArcjet } from "../arcjet.js";
 
 //!TODO implement webscocket with dependncy injection pattern or event emitter
 
@@ -25,7 +26,20 @@ export function attachWebSocketServer(server) {
     });
 
 
-    wss.on("connection", (socket) => {
+    wss.on("connection", async (socket, req) => {
+        if (wsArcjet) {
+            try {
+                const decision = await wsArcjet.protect(req)
+                if (decision.isDenied()) {
+                    const code = decision.reason.isRateLimit() ? 1013 : 1008; // Custom close codes for rate limit and forbidden
+                    const reason = decision.reason.isRateLimit() ? 'Rate limit exceeded' : 'Access denied';
+                    socket.close(code, reason)
+                }
+            } catch (error) {
+                console.error('WS connection error')
+                socket.close(1011, 'Server security error') // 1011 indicates an unexpected condition prevented the request from being fulfilled
+            }
+        }
         socket.isAlive = true;
         socket.on("pong", () => {
             socket.isAlive = true;
