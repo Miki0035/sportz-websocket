@@ -30,3 +30,4 @@ export async function syncMatchStatus(match, updateStatus) {
     }
     return match.status;
 }
+

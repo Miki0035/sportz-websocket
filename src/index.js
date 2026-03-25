@@ -31,8 +31,9 @@ app.use("/api/matches", matchRouter);
 app.use("/api/matches/:id/commentary", commentaryRouter);
 
 // attch websocket server to the existing HTTP server
-const { broadcastMatchCreated } = attachWebSocketServer(server)
+const { broadcastMatchCreated, broadcastCommentary } = attachWebSocketServer(server)
 app.locals.broadcastMatchCreated = broadcastMatchCreated;
+app.locals.broadcastCommentary = broadcastCommentary;
 
 
 server.listen(PORT, HOST, () => {
