@@ -145,3 +145,6 @@ vite.config.ts.timestamp-*
 
 # Drizzle files
 drizzle/
+
+#APM folder
+apminsightdata/
