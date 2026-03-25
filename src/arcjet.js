@@ -7,8 +7,6 @@ if (!arcjetKey) {
     throw new Error('ARCJET_KEY is not defined in .env file');
 }
 
-
-
 export const httpArcjet = arcjet({
     key: arcjetKey,
     rules: [

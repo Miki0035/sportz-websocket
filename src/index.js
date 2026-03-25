@@ -1,8 +1,9 @@
 import express from 'express';
 import matchRouter from './routes/matches.js';
+import commentaryRouter from './routes/commentary.js';
 import http from 'http';
 import { attachWebSocketServer } from './ws/server.js';
-import { securityMiddleware } from './arcjet.js';
+// import { securityMiddleware } from './arcjet.js';
 import 'dotenv/config';
 
 
@@ -23,8 +24,11 @@ const app = express();
 const server = http.createServer(app)
 
 app.use(express.json());
-app.use(securityMiddleware());
+// app.use(securityMiddleware());
+
+// Routers
 app.use("/api/matches", matchRouter);
+app.use("/api/matches/:id/commentary", commentaryRouter);
 
 // attch websocket server to the existing HTTP server
 const { broadcastMatchCreated } = attachWebSocketServer(server)
