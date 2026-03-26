@@ -4,6 +4,7 @@
 
 <img src="https://img.shields.io/badge/express.js-404D59?style=for-the-badge&logo=express&logoColor=white" alt="Express.js"/>
 <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript"/>
+<img src="https://img.shields.io/badge/neon-database-00E699?style=for-the-badge&logoColor=black" alt="Neon"/>
 <img src="https://img.shields.io/badge/drizzle-0C0C0C?style=for-the-badge&logo=drizzle&logoColor=C5F74F" alt="Drizzle ORM"/>
 <img src="https://img.shields.io/badge/websocket-010101?style=for-the-badge&logo=websocket&logoColor=white" alt="WebSocket"/>
  
