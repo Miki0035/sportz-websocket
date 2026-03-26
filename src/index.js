@@ -2,6 +2,7 @@ import AgentAPI from 'apminsight';
 AgentAPI.config()
 
 import express from 'express';
+import cors from 'cors';
 import matchRouter from './routes/matches.js';
 import commentaryRouter from './routes/commentary.js';
 import http from 'http';
@@ -27,6 +28,9 @@ const app = express();
 const server = http.createServer(app)
 
 app.use(express.json());
+app.use(cors({
+    origin: 'http://localhost:3000',
+}))
 // app.use(securityMiddleware());
 
 // Routers

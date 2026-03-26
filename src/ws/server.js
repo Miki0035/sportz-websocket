@@ -145,7 +145,7 @@ export function attachWebSocketServer(server) {
         sendJson(socket, { type: 'Welcome' })
         socket.on("message", (data) => handleMessage(socket, data))
         socket.on("error", () => socket.terminate())
-        socket.on("close", (socket) => cleanUpSubscriptions(socket))
+        socket.on("close", () => cleanUpSubscriptions(socket))
     });
 
     const interval = setInterval(() => {
