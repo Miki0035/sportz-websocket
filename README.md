@@ -1,5 +1,11 @@
 # Sportz Backend
 
+<div align="center">
+
+![thumbnail](./public/thumbnail.png)
+
+</div>
+
 <p align="center">
 
 <img src="https://img.shields.io/badge/express.js-404D59?style=for-the-badge&logo=express&logoColor=white" alt="Express.js"/>
