@@ -34,16 +34,35 @@ const allowedOrigins = [
     'https://sportz-miki0035.netlify.app'
 ]
 
-app.use(cors({
-    origin: (origin, callback) => {
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error("Not allowed by CORS"));
-        }
-    },
-    credentials: true,
-}));
+// app.use(cors({
+//     origin: (origin, callback) => {
+//         if (!origin) {
+//             // allow requests like curl / Postman
+//             callback(null, true);
+//             return;
+//         }
+//         if (allowedOrigins.includes(origin)) {
+//             callback(null, true);
+//         } else {
+//             callback(new Error(`Origin ${origin} not allowed by CORS`));
+//         }
+//     },
+//     credentials: true,
+// }));
+
+
+app.use(
+    cors({
+        origin: (origin, callback) => {
+            // Only allow requests with an origin header and that match allowedOrigins
+            if (origin && allowedOrigins.includes(origin)) {
+                callback(null, true);
+            } else {
+                callback(new Error(`CORS policy: Origin ${origin} not allowed`));
+            }
+        },
+    })
+);
 
 // app.use(securityMiddleware());
 
