@@ -31,7 +31,7 @@ app.use(express.json());
 
 const allowedOrigins = [
     'http://localhost:3000',
-    'https://sportz-miki0035.netlify.app/'
+    'https://sportz-miki0035.netlify.app'
 ]
 
 app.use(cors({
